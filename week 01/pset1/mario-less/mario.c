@@ -1,80 +1,32 @@
 #include <cs50.h>
 #include <stdio.h>
 
-
 int main(void)
 {
-    // Getting user inputs
-    long credit_card = get_long("Number: ");
+    int h = 0;
 
-    // Initiating variables
-    int digit_count = 0;
-    long divided_number = credit_card;
-    long individual_number = credit_card;
-    int sum = 0;
-
-    // Calculating CheckSum
-    while (divided_number > 0)
+    // Prompting for input
+    do
     {
-        individual_number = divided_number % 10; // Getting the last digit of the credit card
-        divided_number = divided_number / 10;   // Divide the number by 10 to get the next digit
-        digit_count++;  // Counting the number of digits
-
-        // Check whether the digit count is even or odd
-        if (digit_count % 2 == 0)
-        {
-            int tmp_sum = individual_number * 2;
-
-            if (tmp_sum > 9)
-            {
-                sum += (tmp_sum % 10 + tmp_sum / 10);
-            }
-
-            else
-            {
-                sum += tmp_sum;
-            }
-        }
-
-        else
-        {
-            sum += individual_number;
-        }
+        h = get_int("Height: ");
     }
+    while (h < 1 || h > 8);
 
-    // Checking validity of the card
-    if (sum % 10 == 0)
+    // Printing a new line
+    for (int i = 0; i < h; i++)
     {
-        // AmericanExpress
-        int amex = credit_card / 10000000000000;
-        if ((digit_count == 15) && (amex == 37 || amex == 34))
+        // Printing spaces
+        for (int j = 0; j < (h - (i + 1)); j++)
         {
-            printf("AMEX\n");
-            return 0;
+            printf(" ");
         }
 
-        // MasterCard
-        int master = credit_card / 100000000000000;
-        if ((digit_count == 16) && (master >= 50 && master <= 55))
+        // Printing hashes
+        for (int j = 0; j < (i + 1); j++)
         {
-            printf("MASTERCARD\n");
-            return 0;
+            printf("#");
         }
 
-        // Visa
-        int visa = credit_card / 1000000000000;
-        if ((digit_count >= 13 && digit_count <= 16) && (visa == 4 || (master / 10 == 4)))
-        {
-            printf("VISA\n");
-            return 0;
-        }
-
-        // If no card number matched
-        printf("INVALID\n");
-    }
-
-    else
-    {
-        printf("INVALID\n");
+        printf("\n");
     }
 }
